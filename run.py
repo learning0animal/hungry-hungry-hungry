@@ -40,8 +40,8 @@ def job():
         rows, cols = frame.shape[0], frame.shape[1]
         for detection in out[0,0,:,:]:
             score = float(detection[2])
-            print(score)
-            if score > 0.3:
+            # print(score)
+            if score > 0.6:
                 left = detection[3] * cols
                 top = detection[4] * rows
                 right = detection[5] * cols
@@ -49,10 +49,10 @@ def job():
                 cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (23, 230, 210), thickness=2)
                 count += 1
 
-        file_name = 'data/{}.jpg'.format(datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S'))
+        file_name = 'data/record/{}.jpg'.format(datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S'))
         cv2.imwrite(file_name, frame)
-        with open('data/count.csv', 'wt') as f:
-            f.write('{},{}'.format(file_name, count))
+        with open('data/record/count.csv', 'a') as f:
+            f.write('{},{}\n'.format(file_name, count))
         print('[INFO] 拍摄图像保存成功 {}'.format(file_name))
 
 
